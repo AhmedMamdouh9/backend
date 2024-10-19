@@ -51,11 +51,7 @@ jobs:
 
       - name: List Docker images
         run: docker images
-
-      - name: Tag Docker image
-        run: |
-          docker tag my-laravel-app:latest ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:${{ env.VERSION }}
-
+        
       - name: Push Docker image to DockerHub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:${{ env.VERSION }}
