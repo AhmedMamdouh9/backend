@@ -51,7 +51,3 @@ jobs:
 
       - name: List Docker images
         run: docker images
-        
-      - name: Push Docker image to DockerHub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:${{ env.VERSION }}
