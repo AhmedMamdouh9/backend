@@ -46,12 +46,18 @@ jobs:
         run: |
           docker build -t my-laravel-app:latest .
 
-      # Tag Docker image as latest
-      - name: Tag Docker image as latest
+      # Define version based on date and time
+      - name: Set version
+        id: vars
         run: |
-          docker tag my-laravel-app:latest ahmedmamdouh51099/my-laravel-app:latest
+          echo "VERSION=$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
+
+      # Tag Docker image with the version
+      - name: Tag Docker image with version
+        run: |
+          docker tag my-laravel-app:latest ahmedmamdouh51099/my-laravel-app:${{ env.VERSION }}
 
       # Push Docker image to DockerHub
       - name: Push Docker image to DockerHub
         run: |
-          docker push ahmedmamdouh51099/my-laravel-app:latest
+          docker push ahmedmamdouh51099/my-laravel-app:${{ env.VERSION }}
