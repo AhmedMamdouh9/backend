@@ -39,11 +39,31 @@ The workflow is defined in `.github/workflows/deploy_backend.yml`.
 
 ##### Steps
 
-1. **Checkout code**: Uses the `actions/checkout@v2` action to check out the repository code.
-2. **Create .env file**: Copies `.env.example` to `.env` and appends environment variables from GitHub secrets.
-3. **Set up Docker Buildx**: Uses the `docker/setup-buildx-action@v2` action to set up Docker Buildx.
-4. **Log in to DockerHub**: Uses the `docker/login-action@v2` action to log in to DockerHub using credentials stored in GitHub secrets.
-5. **Build Docker image**: Builds the Docker image for the Laravel application.
+1. **Checkout code**  
+   Checks out the repository code using `actions/checkout@v2`.
+
+2. **Create .env file**  
+   Copies `.env.example` to `.env` and adds environment variables from GitHub secrets.
+
+3. **Set up Docker Buildx**  
+   Sets up Docker Buildx for efficient image building.
+
+4. **Log in to DockerHub**  
+   Logs in to DockerHub with credentials from GitHub secrets.
+
+5. **Build Docker image**  
+   Builds the Docker image for the Laravel application, tagged as `my-laravel-app:latest`.
+
+6. **Set version**  
+   Sets a unique version for the image based on the current date and time.
+
+7. **Tag Docker image with version**  
+   Tags the image with the generated version to prevent overwriting.
+
+8. **Push Docker image to DockerHub**  
+   Pushes the tagged image to DockerHub for deployment.
+
+
 
 ### Environment Variables
 
@@ -63,6 +83,11 @@ To trigger this workflow, push changes to the `main` branch or create a pull req
 
 ![Screenshot from 2024-10-20 14-17-04](https://github.com/user-attachments/assets/558a506a-ca15-40f4-9605-144f268ca24c)
 
+**Push Docker image to DockerHub**
+
+![Screenshot from 2024-10-20 14-15-29](https://github.com/user-attachments/assets/8481b6a4-a943-49be-ad5b-23c1c38b903b)
+
+
 ## Nginx Configuration: Default Server
 
 This Nginx configuration file sets up a default server to serve a Laravel application. It listens on port 80 and serves files from the `/var/www/html/public` directory.
@@ -77,28 +102,3 @@ The configuration is defined in `default.conf`.
 - **Server Name**: The server name is set to `localhost`.
 - **Root**: The root directory is set to `/var/www/html/public`.
 - **Index**: The index files are `index.php`, `index.html`, and `index.htm`.
-
-### Location Blocks
-
-#### Root Location
-
-- **Path**: `/`
-- **Try Files**: Tries to serve the requested URI, then the URI with a trailing slash, and finally falls back to `index.php` with the query string.
-
-#### PHP Files
-
-- **Path**: `~ \.php$`
-- **Include**: Includes the `snippets/fastcgi-php.conf` configuration.
-- **FastCGI Pass**: Passes PHP requests to FastCGI at `127.0.0.1:9000`.
-- **FastCGI Param**: Sets the `SCRIPT_FILENAME` parameter to the document root and script name.
-- **Include**: Includes the `fastcgi_params` configuration.
-
-#### Hidden Files
-
-- **Path**: `~ /\.ht`
-- **Deny**: Denies access to all `.ht` files.
-
-### Example Usage
-
-To use this configuration, place it in your Nginx configuration directory (e.g., `/etc/nginx/sites-available/`) and create a symbolic link to it in the `sites-enabled` directory. Then, restart Nginx to apply the changes.
-
