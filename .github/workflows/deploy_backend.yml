@@ -46,12 +46,12 @@ jobs:
         run: |
           docker build -t my-laravel-app:latest .
 
-      # Tag Docker image with "latest"
+      # Tag Docker image as latest
       - name: Tag Docker image as latest
         run: |
-          docker tag my-laravel-app:latest ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest
+          docker tag my-laravel-app:latest ahmedmamdouh51099/my-laravel-app:latest
 
       # Push Docker image to DockerHub
       - name: Push Docker image to DockerHub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest
+          docker push ahmedmamdouh51099/my-laravel-app:latest
