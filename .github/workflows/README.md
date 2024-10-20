@@ -61,7 +61,7 @@ The following environment variables are set using GitHub secrets:
 
 To trigger this workflow, push changes to the `main` branch or create a pull request targeting the `main` branch. You can also manually trigger the workflow from the GitHub Actions interface.
 
-![Screenshot_20241019_213552](https://github.com/user-attachments/assets/afe6dcb9-e7fd-41df-a195-4805f111db03)
+![Screenshot from 2024-10-20 14-17-04](https://github.com/user-attachments/assets/558a506a-ca15-40f4-9605-144f268ca24c)
 
 ## Nginx Configuration: Default Server
 
